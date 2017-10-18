@@ -1,0 +1,19 @@
+{
+  "DB": {
+    "dbn": "postgres",
+    "db": "newsmap",
+    "user": "newsmap",
+    "pw": "",
+    "host": ""
+  },
+  "Routes": {
+    "port": 8000
+  },
+  "NYT": {
+    "api_key": "",
+    "base_url": "https://api.nytimes.com/svc/archive/v1/%s/%s.json"
+  },
+  "Geocoding": {
+      "api_key": ""
+  }
+}
