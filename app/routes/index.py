@@ -15,7 +15,13 @@ class Index:
 
         articles = Model.Article.between('2017/09/01', '2017/09/12')
 
-        print articles
+        data.articles = []
+
+        article_ids = [a['id'] for a in articles]
+
+        locations_by_article_id = Model.Location.for_articles(article_ids)
+
+        print len(locations_by_article_id)
 
         data.l = ['1', 'b', 'c']
 
