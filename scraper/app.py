@@ -97,8 +97,8 @@ for article in s.gloc:
                             pass
 
                 db.insert('locations', name=res['formatted_address'],
-                                        lat=res['geometry']['location']['lat'],
-                                        lng=res['geometry']['location']['lng'],
+                                        latitude=res['geometry']['location']['lat'],
+                                        longitude=res['geometry']['location']['lng'],
                                         pub_date=pub_date,
                                         article_id=article_id,
                                         country=std_country_name,

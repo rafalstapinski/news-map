@@ -4,11 +4,5 @@ $var title: $data.title
 $var css: $data.css
 $var js: $data.js
 
-<!-- <div class="main" > -->
-    <div class="map" >
-    $for l in data.locations:
-        <div class="dot" style="margin-top:$l.top;margin-left:$l.left;" >
-            <p >$l.name</p>
-        </div>
-    </div>
-<!-- </div> -->
+<div class="map" id="map" >
+</div>

@@ -1,2 +1,5 @@
 *.pyc
 config.json
+lib/
+node_modules/
+.DS_STORE

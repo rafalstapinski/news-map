@@ -3,9 +3,11 @@ import routes as Route
 import helpers as Help
 
 Index = Route.Index
+Location = Route.Location
 
 urls = (
-    '/',        'Index'
+    '/',            'Index',
+    '/locations',   'Location'
 )
 
 Help.Config.set()
