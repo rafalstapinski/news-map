@@ -1,4 +1,5 @@
 import helpers as Help
+import arrow
 
 class Location:
 
@@ -15,11 +16,26 @@ class Location:
     def for_articles(article_ids):
 
         db = Help.DB.connect()
-        res = {}
+        res = []
 
         for article_id in article_ids:
 
             params = {'article_id': article_id}
-            res[str(article_id)] =  db.select('locations', params, where='article_id = $article_id').list()
+            locs = db.select('locations', params, where='article_id = $article_id').list()
+            for loc in locs:
+                res.append(loc)
 
         return res
+
+    @staticmethod
+    def between(start_date, end_date):
+
+        start = arrow.get(start_date).timestamp
+        end = arrow.get(end_date).timestamp
+
+        db = Help.DB.connect()
+
+        params = {'start': start, 'end': end}
+        locations = db.select('locations', params, where='pub_date >= $start AND pub_date <= $end').list()
+
+        return locations

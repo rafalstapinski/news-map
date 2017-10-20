@@ -13,16 +13,12 @@ class Index:
         data.css = 'index.css'
         data.js = 'index.js'
 
-        articles = Model.Article.between('2017/09/01', '2017/09/12')
+        locations = Model.Location.between('2017/10/01', '2017/10/10')
 
-        data.articles = []
+        for loc in locations:
+            loc.top = '%f%%' % (100 - ((90 + loc.lat) / 1.8))
+            loc.left = '%f%%' % ((180 + loc.lng) / 3.6)
 
-        article_ids = [a['id'] for a in articles]
-
-        locations_by_article_id = Model.Location.for_articles(article_ids)
-
-        print len(locations_by_article_id)
-
-        data.l = ['1', 'b', 'c']
+        data.locations = locations
 
         return Help.Render.index(data)
