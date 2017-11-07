@@ -24,7 +24,10 @@ class Location:
                     'name': location.name,
                     'latitude': location.latitude,
                     'longitude': location.longitude,
-                    'radius': 5
+                    'country': location.country,
+                    'country_lat': location.country_lat,
+                    'country_lng': location.country_lng,
+                    'radius': 10
                 }
                 res.append(l)
             else:
