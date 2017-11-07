@@ -24,7 +24,7 @@ class Location:
                     'name': location.name,
                     'latitude': location.latitude,
                     'longitude': location.longitude,
-                    'radius': 10
+                    'radius': 5
                 }
                 res.append(l)
             else:

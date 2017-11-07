@@ -12,7 +12,7 @@ import arrow
 
 Config.set()
 
-s = Scraper(2017, 10)
+s = Scraper(2017, 11)
 
 db = web.database(dbn=Config.get('DB/dbn'),
                     db=Config.get('DB/db'),
