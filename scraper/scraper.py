@@ -11,7 +11,7 @@ class Scraper:
         self.gloc = []
 
         self.get()
-        self.sort()
+        self.prune_no_gloc()
 
 
     def get(self):
@@ -24,7 +24,7 @@ class Scraper:
 
         self.response = r
 
-    def sort(self):
+    def prune_no_gloc(self):
 
         for article in self.response['response']['docs']:
             for keyword in article['keywords']:

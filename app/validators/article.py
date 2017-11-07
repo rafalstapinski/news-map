@@ -1,4 +1,5 @@
-from data import data
+from _data import data
+import arrow
 
 class Location:
 
@@ -9,8 +10,14 @@ class Location:
             data.is_valid = False
             return data
 
-        data.start_date = i.get('start_date')
-        data.end_date = i.get('end_date')
+        start = arrow.get(i.get('start_date')).timestamp
+        end = arrow.get(i.get('end_date')).timestamp
+
+        if end > start:
+            data.is_valid = False
+
+        data.start_date = start
+        data.end_date = end
         data.is_valid = True
 
         return data

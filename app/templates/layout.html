@@ -4,8 +4,8 @@ $def with (content)
   <head >
     <title >$content.title</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
-    $for script in content.css.split():
-        <link rel="stylesheet" href="/static/css/$content.css" />
+    $for stylesheet in content.css.split():
+        <link rel="stylesheet" href="$stylesheet" />
   </head>
   <body >
     $:content

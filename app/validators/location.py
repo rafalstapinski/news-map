@@ -1,4 +1,4 @@
-from data import data
+from _data import data
 
 class Location:
 

@@ -4,10 +4,12 @@ import helpers as Help
 
 Index = Route.Index
 Location = Route.Location
+Article = Route.Article
 
 urls = (
     '/',            'Index',
-    '/locations',   'Location'
+    # '/locations',   'Location',
+    '/articles',    'Article'
 )
 
 Help.Config.set()

@@ -30,12 +30,9 @@ class Location:
     @staticmethod
     def between(start_date, end_date):
 
-        start = arrow.get(start_date).timestamp
-        end = arrow.get(end_date).timestamp
-
         db = Help.DB.connect()
 
-        params = {'start': start, 'end': end}
+        params = {'start': start_date, 'end': end_date}
         locations = db.select('locations', params, where='pub_date >= $start AND pub_date <= $end').list()
 
         return locations
