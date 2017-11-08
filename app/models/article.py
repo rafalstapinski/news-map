@@ -1,5 +1,4 @@
 import time
-import arrow
 import helpers as Help
 
 class Article:
@@ -9,7 +8,26 @@ class Article:
 
         db = Help.DB.connect()
 
-        params = {'start': start_date, 'end': end_date + 86400}
-        articles = db.select('articles', params, where='pub_date >= $start AND pub_date <= $end').list()
+        params = {
+            'start_date': start_date,
+            'end_date': end_date + 86400
+        }
+
+        articles = db.query(
+            '''
+                SELECT *
+                FROM glocations
+                INNER JOIN articles
+                ON glocations.article_id = articles.id
+                INNER JOIN countries
+                ON glocations.country = countries.id
+                WHERE (
+                    glocations.pub_date >= $start_date
+                    AND
+                    glocations.pub_date <= $end_date
+                )
+            ''',
+            vars = params
+        ).list()
 
         return articles
