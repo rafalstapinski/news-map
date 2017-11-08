@@ -23,7 +23,7 @@ def geocode(q):
 
         raise GeoCodeError('GeoCode API Rate Limit')
 
-    if len(r['results'] < 1):
+    if len(r['results']) < 1:
 
         raise GeoCodeError('No results found. This is probably the USSR. ')
 
@@ -57,6 +57,6 @@ def geocode(q):
         'level_1': level_1,
         'level_2': level_2,
         'locality': locality,
-        'lng': lat,
+        'lat': lat,
         'lng': lng
     }
