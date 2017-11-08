@@ -10,12 +10,13 @@ Config.set()
 
 # s = Scraper(2017, 11)
 
-db = web.database(dbn=Config.get('DB/dbn'),
-                    db=Config.get('DB/db'),
-                    user=Config.get('DB/user'),
-                    pw=Config.get('DB/pw'),
-                    host=Config.get('DB/host')
-                    )
+db = web.database(
+    dbn = Config.get('DB/dbn'),
+    db = Config.get('DB/db'),
+    user = Config.get('DB/user'),
+    pw = Config.get('DB/pw'),
+    host = Config.get('DB/host')
+)
 
 
 for article in s.gloc:
@@ -34,9 +35,8 @@ for article in s.gloc:
     title = article['headline']['main']
     pub_date = arrow.get(article['pub_date']).timestamp
 
-    article_exists = db.select(
-        'articles',
-        dict(web_url = web_url),
+    article_exists = db.select('articles',
+        vars = dict(web_url = web_url),
         where = 'web_url=$web_url'
     ).first()
 
@@ -59,12 +59,29 @@ for article in s.gloc:
 
             if location['country']:
 
-                country_exists = db.select(
-                    'countries',
-                    {'name': location['country']},
+                country = db.select('countries',
+                    vars = {'name': location['country']},
                     where = 'name = $name'
                 ).first()
 
+                if country:
+
+                    country_id = country.id
+
+                else:
+
+                    try:
+                        country = geocode(location['country'])
+
+                        country_id = db.insert('countries',
+                            name = country['name'],
+                            lat = country['lat'],
+                            lng = country['lng']
+                        )
+
+                    except Exception, e:
+                        continue
+                        print article_id, title, e
 
 
     # if exists is None:

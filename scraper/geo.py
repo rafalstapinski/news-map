@@ -2,12 +2,12 @@ from config import Config
 import requests
 import json
 
+
 class GeoCodeError(Exception):
 
     def __init__(self, message):
 
         super(GeoCodeError, self).__init__(message)
-
 
 
 def geocode(q):
@@ -49,14 +49,14 @@ def geocode(q):
             locality = comp['long_name']
 
 
-    latitude = r['results'][0]['geometry']['location']['lat']
-    longitude = r['results'][0]['geometry']['location']['lng']
+    lat = r['results'][0]['geometry']['location']['lat']
+    lng = r['results'][0]['geometry']['location']['lng']
 
     return {
         'country': country,
         'level_1': level_1,
         'level_2': level_2,
         'locality': locality,
-        'latitude': latitude,
-        'longitude': longitude
+        'lng': lat,
+        'lng': lng
     }
