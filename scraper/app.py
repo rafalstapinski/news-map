@@ -74,7 +74,7 @@ for article in s.gloc:
 
                 country = db.select('countries',
                     vars = {'name': location['country']},
-                    where = 'name = $name'
+                    where = 'country_name = $name'
                 ).first()
 
                 if country:
@@ -86,9 +86,9 @@ for article in s.gloc:
                         country = geocode(location['country'])
 
                         country_id = db.insert('countries',
-                            name = country['country'],
-                            lat = country['lat'],
-                            lng = country['lng']
+                            country_name = country['country'],
+                            country_lat = country['lat'],
+                            country_lng = country['lng']
                         )
 
                     except Exception, e:
@@ -100,7 +100,7 @@ for article in s.gloc:
 
                 level_1 = db.select('level_1',
                     vars = {'name': location['level_1']},
-                    where = 'name = $name'
+                    where = 'level_1_name = $name'
                 ).first()
 
                 if level_1:
@@ -119,9 +119,9 @@ for article in s.gloc:
                         level_1 = geocode(location['level_1'])
 
                         level_1_id = db.insert('level_1',
-                            name = level_1['level_1'],
-                            lat = level_1['lat'],
-                            lng = level_1['lng']
+                            level_1_name = level_1['level_1'],
+                            level_1_lat = level_1['lat'],
+                            level_1_lng = level_1['lng']
                         )
 
                     except Exception, e:
@@ -132,7 +132,7 @@ for article in s.gloc:
 
                 level_2 = db.select('level_2',
                     vars = {'name': location['level_2']},
-                    where = 'name = $name'
+                    where = 'level_2_name = $name'
                 ).first()
 
                 if level_2:
@@ -144,9 +144,9 @@ for article in s.gloc:
                         level_2 = geocode(location['level_2'])
 
                         level_2_id = db.insert('level_2',
-                            name = level_2['level_2'],
-                            lat = level_2['lat'],
-                            lng = level_2['lng']
+                            level_2_name = level_2['level_2'],
+                            level_2_lat = level_2['lat'],
+                            level_2_lng = level_2['lng']
                         )
 
                     except Exception, e:
@@ -158,7 +158,7 @@ for article in s.gloc:
 
                 locality = db.select('locality',
                     vars = {'name': location['locality']},
-                    where = 'name = $name'
+                    where = 'locality_name = $name'
                 ).first()
 
                 if locality:
@@ -170,9 +170,9 @@ for article in s.gloc:
                         locality = geocode(location['locality'])
 
                         locality_id = db.insert('locality',
-                            name = locality['locality'],
-                            lat = locality['lat'],
-                            lng = locality['lng']
+                            locality_name = locality['locality'],
+                            locality_lat = locality['lat'],
+                            locality_lng = locality['lng']
                         )
 
                     except Exception, e:
@@ -188,77 +188,3 @@ for article in s.gloc:
                 locality = locality_id,
                 pub_date = pub_date
             )
-
-
-    # if exists is None:
-    #
-    #     article_id = db.insert('articles',
-    #         title=title,
-    #         summary=summary,
-    #         web_url=web_url,
-    #         pub_date=pub_date
-    #     )
-    #
-    #     for keyword in article['keywords']:
-    #         if keyword['name'] == 'glocations':
-    #             params = {
-    #                 'address': keyword['value'],
-    #                 'key': Config.get('Geocoding/api_key')
-    #             }
-    #             r = requests.get(Config.get('Geocoding/base_url'), params).json()
-    #
-    #             try:
-    #                 # why is the NYT tagging the USSR in 2017
-    #                 res = r['results'][0]
-    #             except:
-    #                 continue
-    #
-    #             country_name = None
-    #             std_country_name = None
-    #             country_lat = None
-    #             country_lng = None
-    #
-    #             for comp in res['address_components']:
-    #                 if 'country' in comp['types']:
-    #                     country_name = comp['long_name']
-    #                     break
-    #
-    #             if country_name is not None:
-    #
-    #                 country = db.select('countries', dict(name=country_name), where='name=$name').first()
-    #
-    #                 if country is not None:
-    #
-    #                     std_country_name = country.standard_name
-    #                     country_lat = country.lat
-    #                     country_lng = country.lng
-    #
-    #                 else:
-    #
-    #                     params = {
-    #                         'address': country_name,
-    #                         'key': Config.get('Geocoding/api_key')
-    #                     }
-    #
-    #                     c = requests.get(Config.get('Geocoding/base_url'), params).json()
-    #
-    #                     try:
-    #                         country = c['results'][0]
-    #
-    #                         country_lat = country['geometry']['location']['lat']
-    #                         country_lng = country['geometry']['location']['lng']
-    #                         std_country_name = country['formatted_address']
-    #
-    #                         db.insert('countries', name=country_name, lat=country_lat, lng=country_lng, standard_name=std_country_name)
-    #
-    #                     except:
-    #                         pass
-    #
-    #             db.insert('locations', name=res['formatted_address'],
-    #                                     latitude=res['geometry']['location']['lat'],
-    #                                     longitude=res['geometry']['location']['lng'],
-    #                                     pub_date=pub_date,
-    #                                     article_id=article_id,
-    #                                     country=std_country_name,
-    #                                     country_lat=country_lat,
-    #                                     country_lng=country_lng)
