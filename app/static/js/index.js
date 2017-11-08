@@ -7,11 +7,6 @@ const fetch_articles = () => {
           'end_date': $('#end_date').val()
       },
       success: (data) => {
-          // dmap.bubbles(data.locations, {
-          //   popupTemplate: function(geo, data) {
-          //     return ''
-          //   }
-          // });
         console.log(data)
       }
   });

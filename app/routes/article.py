@@ -12,4 +12,6 @@ class Article:
         if not data.is_valid:
             return Help.Write.error('Invalid dates. ')
 
-        print Model.Article.between(data.start_date, data.end_date)
+        return Help.Write.object(
+            'articles', Model.Article.between(data.start_date, data.end_date)
+        )

@@ -13,7 +13,7 @@ class Article:
             'end_date': end_date + 86400
         }
 
-        articles = db.query(
+        countries = db.query(
             '''
                 SELECT *
                 FROM glocations
@@ -30,4 +30,6 @@ class Article:
             vars = params
         ).list()
 
-        return articles
+        return {
+            'countries': countries
+        }
