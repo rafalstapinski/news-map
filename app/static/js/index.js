@@ -1,3 +1,60 @@
+const filter_level = (category) => {
+
+  if (category == 'all') {
+
+  } else {
+
+    let data = JSON.parse(sessionStorage.getItem(category))
+
+
+
+  }
+
+}
+
+const consolidate = (articles) => {
+
+  let countries = {}
+
+  for (let i = 0; i < articles.countries.length; i++) {
+
+    let article = articles.countries[i]
+
+    if (article.country_name in countries) {
+
+      countries[article.country_name].count++
+
+      countries[article.country_name].articles.push({
+        'title': article.title,
+        'summary': article.summary,
+        'web_url': article.web_url
+      })
+
+    } else {
+
+      let country = {
+        'count': 1,
+        'articles': [
+          {
+            'title': article.title,
+            'summary': article.summary,
+            'web_url': article.web_url
+          }
+        ],
+        'lat': article.country_lat,
+        'lng': article.country_lng
+      }
+
+      countries[article.country_name] = country
+
+    }
+
+  }
+
+  sessionStorage.setItem('countries', JSON.stringify(countries))
+
+}
+
 const fetch_articles = () => {
   $.ajax({
       method: 'get',
@@ -7,7 +64,8 @@ const fetch_articles = () => {
           'end_date': $('#end_date').val()
       },
       success: (data) => {
-        console.log(data)
+        consolidate(data.articles)
+        filter_level('countries')
       }
   });
 }
