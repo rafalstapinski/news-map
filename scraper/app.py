@@ -17,30 +17,55 @@ db = web.database(dbn=Config.get('DB/dbn'),
                     host=Config.get('DB/host')
                     )
 
-print geocode('matawan')
 
-# for article in s.gloc:
-#
-#     if 'abstract' in article:
-#         summary = article['abstract']
-#     elif 'lead_paragraph' in article:
-#         summary = article['lead_paragraph']
-#     elif 'snippet' in article:
-#         summary = article['snippet']
-#     else:
-#         summary = None
-#
-#     web_url = article['web_url']
-#     title = article['headline']['main']
-#     pub_date = arrow.get(article['pub_date']).timestamp
-#
-#     exists = db.select('articles', dict(web_url=web_url),
-#         where='web_url=$web_url'
-#     ).first()
-#
-#     if exists is None:
-#
-#         glocation =
+for article in s.gloc:
+
+    if 'abstract' in article:
+        summary = article['abstract']
+    elif 'lead_paragraph' in article:
+        summary = article['lead_paragraph']
+    elif 'snippet' in article:
+        summary = article['snippet']
+    else:
+        summary = None
+
+
+    web_url = article['web_url']
+    title = article['headline']['main']
+    pub_date = arrow.get(article['pub_date']).timestamp
+
+    article_exists = db.select(
+        'articles',
+        dict(web_url = web_url),
+        where = 'web_url=$web_url'
+    ).first()
+
+
+    if article_exists:
+        continue
+
+    article_id = db.insert('articles',
+        title = title,
+        summary = summary,
+        web_url = web_url,
+        pub_date = pub_date
+    )
+
+    for keyword in article['keywords']:
+
+        if keyword['name'] == 'glocations':
+
+            location = geocode(keyword['value'])
+
+            if location['country']:
+
+                country_exists = db.select(
+                    'countries',
+                    {'name': location['country']},
+                    where = 'name = $name'
+                ).first()
+
+
 
     # if exists is None:
     #
