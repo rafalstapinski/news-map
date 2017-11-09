@@ -1,6 +1,9 @@
 * {
     margin:0px;;
 }
+body {
+  background-color:#6c9bbc;
+}
 .map {
   width:1200px;
   height:600px;

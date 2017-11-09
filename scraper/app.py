@@ -65,7 +65,14 @@ for article in s.gloc:
             print
             print keyword['value']
 
-            location = geocode(keyword['value'])
+            try:
+
+                location = geocode(keyword['value'])
+
+            except Exception, e:
+
+                print article_id, title, e
+                continue
 
             print location
             print

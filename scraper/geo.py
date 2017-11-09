@@ -19,9 +19,15 @@ def geocode(q):
 
     r = requests.get(Config.get('Geocoding/base_url'), params).json()
 
+    if r['status'] == 'ZERO_RESULTS':
+
+        raise GeoCodeError('Zero results found for %s' % q)
+
     if r['status'] != 'OK':
 
-        raise GeoCodeError('GeoCode API Rate Limit')
+        print q, r
+        raise GeoCodeError('GeoCode API ERROR returned.')
+
 
     if len(r['results']) < 1:
 

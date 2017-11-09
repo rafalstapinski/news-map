@@ -116,11 +116,12 @@ $(document).ready(() => {
       element: document.getElementById('map'),
       fills: {
         defaultFill: '#cedac3',
-        bubble: '#6c9bbc'
+        bubble: '#e3b4ad'
       },
       resize: true,
       geographyConfig: {
-        popupOnHover: false
+        popupOnHover: false,
+        borderWidth: 0,
       }
   })
 
