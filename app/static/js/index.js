@@ -1,3 +1,14 @@
+const map = (bubbles) => {
+
+  window.map.bubbles(bubbles, {
+    popupTemplate: (geo, data) => {
+      return '<div class="hoverinfo" >' + data.popup + '</div>'
+    },
+    borderWidth: 0,
+  })
+
+}
+
 const filter_level = (category) => {
 
   if (category == 'all') {
@@ -6,10 +17,38 @@ const filter_level = (category) => {
 
     let data = JSON.parse(sessionStorage.getItem(category))
 
+    let bubbles = []
 
+    for (let dot in data) {
 
+      let popup = '<p >'
+      var track = []
+
+      for (let i = 0; i < data[dot].articles.length; i++) {
+
+        if (track.indexOf(data[dot].articles[i].title) == -1) {
+
+          track.push(data[dot].articles[i].title)
+          popup += data[dot].articles[i].title + '</p><p >'
+
+        }
+      }
+
+      popup += '</p>'
+
+      bubbles.push({
+        name: dot,
+        radius: Math.sqrt(data[dot].count * 16),
+        latitude: data[dot].lat,
+        longitude: data[dot].lng,
+        fillKey: 'bubble',
+        popup: popup
+      })
+
+    }
+
+    map(bubbles)
   }
-
 }
 
 const consolidate = (articles) => {
@@ -73,8 +112,16 @@ const fetch_articles = () => {
 
 $(document).ready(() => {
 
-  const dmap = new Datamap({
-      element: document.getElementById('map')
+  window.map = new Datamap({
+      element: document.getElementById('map'),
+      fills: {
+        defaultFill: '#cedac3',
+        bubble: '#6c9bbc'
+      },
+      resize: true,
+      geographyConfig: {
+        popupOnHover: false
+      }
   })
 
   const start_date = new Pikaday({
