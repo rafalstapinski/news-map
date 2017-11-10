@@ -1,15 +1,24 @@
-const map = (bubbles) => {
+const choropleth = (category) => {
 
-  window.map.bubbles(bubbles, {
-    popupTemplate: (geo, data) => {
-      return '<div class="hoverinfo" >' + data.popup + '</div>'
-    },
-    borderWidth: 0,
-  })
+  const data = JSON.parse(sessionStorage.getItem(category))
+
+  let min = Number.MAX_SAFE_INTEGER
+  let max = -1
+
+  // for (let point in data) {
+  //
+  //   if
+  //
+  // }
+
+  window.map.data = {
+    USA: {fillKey: 'bubbles'}
+  }
+
 
 }
 
-const filter_level = (category) => {
+const bubbles = (category) => {
 
   if (category == 'all') {
 
@@ -47,8 +56,23 @@ const filter_level = (category) => {
 
     }
 
-    map(bubbles)
+    window.map.bubbles(bubbles, {
+      popupTemplate: (geo, data) => {
+        return '<div class="hoverinfo" >' + data.popup + '</div>'
+      },
+      borderWidth: 0,
+    })
   }
+}
+
+const update_map = () => {
+
+  if (sessionStorage.getItem('map_view') === 'bubbles') {
+    bubbles(sessionStorage.getItem('category'))
+  } else if (sessionStorage.getItem('map_view') === 'choropleth') {
+    choropleth(sessionStorage.getItem('category'))
+  }
+
 }
 
 const consolidate = (articles) => {
@@ -104,19 +128,34 @@ const fetch_articles = () => {
       },
       success: (data) => {
         consolidate(data.articles)
-        filter_level('countries')
+        update_map()
       }
-  });
+  })
 }
 
 
 $(document).ready(() => {
 
+  // sessionStorage.setItem('map_view', 'bubbles')
+  sessionStorage.setItem('map_view', 'choropleth')
+  sessionStorage.setItem('category', 'countries')
+
   window.map = new Datamap({
       element: document.getElementById('map'),
       fills: {
         defaultFill: '#cedac3',
-        bubble: '#e3b4ad'
+        bubble: '#e3b4ad',
+        a: 'rgba(81, 85, 76, 0)',
+        b: 'rgba(81, 85, 76, .1)',
+        c: 'rgba(81, 85, 76, .2)',
+        d: 'rgba(81, 85, 76, .3)',
+        e: 'rgba(81, 85, 76, .4)',
+        f: 'rgba(81, 85, 76, .5)',
+        g: 'rgba(81, 85, 76, .6)',
+        h: 'rgba(81, 85, 76, .7)',
+        i: 'rgba(81, 85, 76, .8)',
+        j: 'rgba(81, 85, 76, .9)',
+        k: 'rgba(81, 85, 76, 1)',
       },
       resize: true,
       geographyConfig: {
