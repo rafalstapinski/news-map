@@ -1,7 +1,7 @@
 $(document).ready(() => {
 
-  // sessionStorage.setItem('map_view', 'bubbles')
-  sessionStorage.setItem('map_view', 'choropleth')
+  sessionStorage.setItem('map_view', 'bubbles')
+  // sessionStorage.setItem('map_view', 'choropleth')
   sessionStorage.setItem('category', 'countries')
 
   window.map = new Datamap({
@@ -50,11 +50,18 @@ $(document).ready(() => {
       }
   })
 
-  const today = new Date()
-  const day = ("0" + today.getDate()).slice(-2)
-  const month = ("0" + (today.getMonth() + 1)).slice(-2)
-  const year = today.getFullYear()
-  $('.datepicker').val(year + '/' + month + '/' + day)
+  const yesterday = new Date()
+  const y_day = ("0" + yesterday.getDate()).slice(-2)
+  const y_month = ("0" + (yesterday.getMonth() + 1)).slice(-2)
+  const y_year = yesterday.getFullYear()
+  $('#end_date').val(y_year + '/' + y_month + '/' + y_day)
+
+  let today = new Date()
+  today.setDate(today.getDate() - 1)
+  const t_day = ("0" + today.getDate()).slice(-2)
+  const t_month = ("0" + (today.getMonth() + 1)).slice(-2)
+  const t_year = today.getFullYear()
+  $('#start_date').val(t_year + '/' + t_month + '/' + t_day)
 
   fetch_articles()
 
