@@ -22,7 +22,9 @@ class Index:
             '/static/js/lib/datamaps/datamaps.world.min.js',
             '/static/js/lib/pikaday/pikaday.js',
             '/static/js/lib/pikaday/pikaday.jquery.js',
-            '/static/js/index.js'
+            '/static/js/index.functions.js'
+            '/static/js/index.start.js'
+            '/static/js/index.actions.js'
         ]
 
         data.css = ' '.join(stylesheets)
