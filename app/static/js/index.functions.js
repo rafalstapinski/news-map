@@ -5,6 +5,8 @@ const choropleth = (category) => {
   let min = Number.MAX_SAFE_INTEGER
   let max = -1
 
+  console.log(data)
+
   // for (let point in data) {
   //
   //   if

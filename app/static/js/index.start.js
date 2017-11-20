@@ -1,7 +1,6 @@
 $(document).ready(() => {
 
-  sessionStorage.setItem('map_view', 'bubbles')
-  // sessionStorage.setItem('map_view', 'choropleth')
+  sessionStorage.setItem('map_view', 'choropleth')
   sessionStorage.setItem('category', 'countries')
 
   window.map = new Datamap({
